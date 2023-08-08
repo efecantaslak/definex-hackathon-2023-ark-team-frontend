@@ -1,32 +1,128 @@
 <template>
   <v-layout>
     <v-navigation-drawer
-        expand-on-hover
-        rail
+      expand-on-hover
+      :rail="true"
+      image="https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg"
     >
       <v-list>
         <v-list-item
-            prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
-            title="Jane Doe"
-            subtitle="jane_doe@outlook.com"
+          prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
+          title="Jane Doe"
+          subtitle="Executive"
         ></v-list-item>
       </v-list>
 
       <v-divider></v-divider>
 
-      <v-list density="compact" nav>
-        <v-list-item prepend-icon="home" title="Home" value="home"></v-list-item>
-        <v-list-item prepend-icon="query_stats" title="Reports" value="reports"></v-list-item>
-        <v-list-item prepend-icon="insights" title="Insights" value="insights"></v-list-item>
-        <v-list-item prepend-icon="assignment_turned_in" title="Actions" value="actions"></v-list-item>
-        <v-list-item prepend-icon="star" title="Details" value="details"></v-list-item>
+      <v-list density="compact" :nav="true">
+        <v-list-item prepend-icon="home" title="Home" value="home" to="home"></v-list-item>
+        <v-list-item
+          prepend-icon="query_stats"
+          title="Reports"
+          value="reports"
+          to="reports"
+        ></v-list-item>
+        <v-list-item
+          prepend-icon="insights"
+          title="Insights"
+          value="insights"
+          to="insights"
+        ></v-list-item>
+        <v-list-item
+          prepend-icon="assignment_turned_in"
+          title="Actions"
+          value="actions"
+          to="actions"
+        ></v-list-item>
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar title="ARK App"></v-app-bar>
+    <v-app-bar>
+      <img src="../assets/predictX-logo.png" alt="PredictX" class="predictX-logo ml-4" />
+      <div style="width: 130px; height: 64px;">
+        <v-chart :option="predictXLogoAnimation" />
+      </div>
+    </v-app-bar>
 
-    <v-main class="d-flex ma-2" style="min-height: 300px;">
+    <v-main class="ma-2">
       <router-view></router-view>
     </v-main>
   </v-layout>
 </template>
+<script lang="ts">
+import { use } from 'echarts/core';
+import VChart from 'vue-echarts';
+import { GraphicComponent } from 'echarts/components';
+
+use([GraphicComponent]);
+export default {
+  components: {
+    VChart,
+  },
+  data: () => ({
+    predictXLogoAnimation: {
+      graphic: {
+        elements: [
+          {
+            type: 'text',
+            left: 'center',
+            top: 'center',
+            style: {
+              text: 'PredictX',
+              fontSize: 26,
+              fontWeight: '400',
+              lineDash: [0, 200],
+              lineDashOffset: 0,
+              fill: 'transparent',
+              stroke: '#ffffff',
+              lineWidth: 1,
+            },
+            keyframeAnimation: {
+              duration: 60000,
+              loop: true,
+              keyframes: [
+                {
+                  percent: 0.04,
+                  style: {
+                    fill: 'transparent',
+                    lineDashOffset: 200,
+                    lineDash: [200, 0],
+                  },
+                },
+                {
+                  percent: 0.04,
+                  style: {
+                    fill: 'transparent',
+                  },
+                },
+                {
+                  percent: 0.05,
+                  style: {
+                    fill: '#ffffff',
+                  },
+                },
+                {
+                  percent: 99.87,
+                  style: {
+                    fill: '#ffffff',
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  }),
+};
+</script>
+<style scoped>
+.predictX-logo {
+  width: 36px;
+  height: 36px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+</style>
