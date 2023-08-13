@@ -9,17 +9,15 @@
         <v-list-item
           prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
           title="Jane Doe"
-          subtitle="Executive"
+          subtitle="Analyst"
         ></v-list-item>
       </v-list>
-
       <v-divider></v-divider>
-
       <v-list density="compact" :nav="true">
-        <v-list-item prepend-icon="home" title="Home" value="home" to="home"></v-list-item>
+        <v-list-item prepend-icon="home" title="Anasayfa" value="home" to="home"></v-list-item>
         <v-list-item
           prepend-icon="query_stats"
-          title="Reports"
+          title="Raporlar"
           value="reports"
           to="reports"
         ></v-list-item>
@@ -36,17 +34,28 @@
           to="actions"
         ></v-list-item>
       </v-list>
+      <template v-slot:append>
+        <v-list-item
+          class="mb-5"
+          prepend-icon="logout"
+          title="Çıkış Yap"
+          value="logout"
+          to="/auth/login"
+        ></v-list-item>
+      </template>
     </v-navigation-drawer>
 
     <v-app-bar>
       <img src="../assets/predictX-logo.png" alt="PredictX" class="predictX-logo ml-4" />
-      <div style="width: 130px; height: 64px;">
+      <div style="width: 130px; height: 64px">
         <v-chart :option="predictXLogoAnimation" />
       </div>
     </v-app-bar>
 
     <v-main class="ma-2">
-      <router-view></router-view>
+      <v-container>
+        <router-view></router-view>
+      </v-container>
     </v-main>
   </v-layout>
 </template>
@@ -54,8 +63,9 @@
 import { use } from 'echarts/core';
 import VChart from 'vue-echarts';
 import { GraphicComponent } from 'echarts/components';
+import { CanvasRenderer } from 'echarts/renderers';
 
-use([GraphicComponent]);
+use([GraphicComponent, CanvasRenderer]);
 export default {
   components: {
     VChart,
@@ -117,12 +127,3 @@ export default {
   }),
 };
 </script>
-<style scoped>
-.predictX-logo {
-  width: 36px;
-  height: 36px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-}
-</style>
