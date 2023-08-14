@@ -15,14 +15,6 @@ const router = createRouter({
         path: 'reports',
         name: 'Reports',
         component: () => import('../views/ReportsView.vue'),
-      }, {
-        path: 'insights',
-        name: 'Insights',
-        component: () => import('../views/InsightsView.vue'),
-      }, {
-        path: 'actions',
-        name: 'Actions',
-        component: () => import('../views/ActionsView.vue'),
       }]
     },
     {
