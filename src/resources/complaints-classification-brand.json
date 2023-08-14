@@ -1,0 +1,11 @@
+[
+  { "brand": "garanti-bbva", "classification": "Mobil Uygulama", "count": 1 },
+  { "brand": "garanti-bbva", "classification": "Ücretlendirme", "count": 119 },
+  { "brand": "garanti-bbva", "classification": null, "count": 71 },
+  { "brand": "garanti-bbva", "classification": "", "count": 43 },
+  { "brand": "garanti-bbva", "classification": "ATM", "count": 1 },
+  { "brand": "garanti-bbva", "classification": "İnternet Bankacılığı", "count": 1 },
+  { "brand": "garanti-bbva", "classification": "Kredi Başvurusu", "count": 1 },
+  { "brand": "garanti-bbva", "classification": "Kredi Kartı", "count": 1 },
+  { "brand": "garanti-bbva", "classification": "Müşteri Hizmetleri", "count": 2 }
+]
