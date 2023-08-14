@@ -21,18 +21,6 @@
           value="reports"
           to="reports"
         ></v-list-item>
-        <v-list-item
-          prepend-icon="insights"
-          title="Insights"
-          value="insights"
-          to="insights"
-        ></v-list-item>
-        <v-list-item
-          prepend-icon="assignment_turned_in"
-          title="Actions"
-          value="actions"
-          to="actions"
-        ></v-list-item>
       </v-list>
       <template v-slot:append>
         <v-list-item

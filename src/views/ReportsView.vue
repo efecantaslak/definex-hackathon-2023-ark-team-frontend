@@ -16,7 +16,7 @@
       </v-card>
     </v-col>
     <v-col :cols="6">
-      <v-card title="Lorem Ipsum" class="ma-4" :elevation="3" :height="500" rounded>
+      <v-card title="Şikayet Kategorilerine Göre Toplamlar" class="ma-4" :elevation="3" :height="500" rounded>
         <v-chart :option="pieChartOptions" />
       </v-card>
     </v-col>
