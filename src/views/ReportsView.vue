@@ -2,8 +2,8 @@
   <v-row>
     <v-col :cols="12">
       <!-- First Chart -->
-      <v-card title="Tüm Şikayetler" color="#2E7D32" class="ma-4" rounded>
-        <v-chart :option="card1ChartOptions" style="height: 240px;"/>
+      <v-card title="Aylık Şikayet Sayıları" color="#2E7D32" class="ma-4" rounded>
+        <v-chart :option="stackedBarChart" style="height: 240px;"/>
       </v-card>
     </v-col>
     <!-- Pie Chart Column -->
@@ -61,6 +61,10 @@ export default {
   },
   data: () => ({
     allComplaints: [],
+    complaintsByMonth: {
+      months: [],
+      data: {}
+    },
     complaintsByBrand: [],
     complaintsClassificationByBrand: [],
     complaintsByDateAndClassification: [],
@@ -182,7 +186,96 @@ export default {
         type: 'value'
       },
       series: []
-    }
+    },
+    stackedBarChart: {
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          // Use axis to trigger tooltip
+          type: 'shadow' // 'shadow' as default; can also be 'line' or 'shadow'
+        }
+      },
+      textStyle: {
+        color: '#ffffff',
+      },
+      legend: {},
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+      },
+      xAxis: {
+
+        type: 'category',
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          name: 'Direct',
+          type: 'bar',
+          stack: 'total',
+          label: {
+            show: true
+          },
+          emphasis: {
+            focus: 'series'
+          },
+          data: [320, 302, 301, 334, 390, 330, 320]
+        },
+        {
+          name: 'Mail Ad',
+          type: 'bar',
+          stack: 'total',
+          label: {
+            show: true
+          },
+          emphasis: {
+            focus: 'series'
+          },
+          data: [120, 132, 101, 134, 90, 230, 210]
+        },
+        {
+          name: 'Affiliate Ad',
+          type: 'bar',
+          stack: 'total',
+          label: {
+            show: true
+          },
+          emphasis: {
+            focus: 'series'
+          },
+          data: [220, 182, 191, 234, 290, 330, 310]
+        },
+        {
+          name: 'Video Ad',
+          type: 'bar',
+          stack: 'total',
+          label: {
+            show: true
+          },
+          emphasis: {
+            focus: 'series'
+          },
+          data: [150, 212, 201, 154, 190, 330, 410]
+        },
+        {
+          name: 'Search Engine',
+          type: 'bar',
+          stack: 'total',
+          label: {
+            show: true
+          },
+          emphasis: {
+            focus: 'series'
+          },
+          data: [820, 832, 901, 934, 1290, 1330, 1320]
+        }
+      ]
+    },
   }),
   created() {
     axios.get('http://localhost/api/complaints/complaints-classification-brand/')
@@ -200,6 +293,7 @@ export default {
     async fetchAllData() {
       await Promise.all([
         this.fetchAllComplaints(),
+        this.fetchComplaintsByMonth(),
         this.fetchComplaintsByBrand(),
         this.fetchComplaintsClassificationByBrand(),
         this.fetchComplaintsByDateAndClassification()
@@ -208,6 +302,11 @@ export default {
       this.updateCard1Chart();
       this.updateCard2Chart();
       this.updatePieChart();
+      this.updateComplaintsByMonth();
+    },
+    async fetchComplaintsByMonth() {
+      const response = await axios.get('http://localhost/api/complaints/complaints-by-month/');
+      this.complaintsByMonth = response.data;
     },
     async fetchAllComplaints() {
       const response = await axios.get('http://localhost/api/complaints/all-complaints/');
@@ -230,6 +329,37 @@ export default {
       // Example:
       this.card1ChartOptions.series[0].data = this.complaintsByDateAndClassification.map(item => item.count);
       this.card1ChartOptions.xAxis.data = this.complaintsByDateAndClassification.map(item => item.date);
+    },
+    updateComplaintsByMonth() {
+      const classifications = new Set();
+      const seriesData = {};
+      const months = this.complaintsByMonth.months;
+
+      for (let month of months) {
+        const dataForMonth = this.complaintsByMonth.data[month];
+        for (let classification in dataForMonth) {
+          classifications.add(classification);
+          if (!seriesData[classification]) seriesData[classification] = [];
+          seriesData[classification].push(dataForMonth[classification]);
+        }
+      }
+
+      const series = [...classifications].map(classification => {
+        return {
+          name: classification,
+          type: 'bar',
+          stack: 'total',
+          label: {
+            show: true
+          },
+          emphasis: {
+            focus: 'series'
+          },
+          data: seriesData[classification].map(value => value || 0)
+        };
+      });
+      this.stackedBarChart.series = series;
+      this.stackedBarChart.xAxis.data = this.complaintsByMonth.months;
     },
     updateCard2Chart() {
       // Modify card2ChartOptions with fetched data
