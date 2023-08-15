@@ -1,43 +1,49 @@
 <template>
   <v-row>
-    <!-- First Chart -->
-    <v-col :cols="4">
-      <v-card color="#2E7D32" class="ma-4" :elevation="3" :height="120" rounded>
-        <v-chart :option="card1ChartOptions" />
+    <v-col :cols="12">
+      <!-- First Chart -->
+      <v-card title="Tüm Şikayetler" color="#2E7D32" class="ma-4" rounded>
+        <v-chart :option="card1ChartOptions" style="height: 240px;"/>
       </v-card>
     </v-col>
-
-    <!-- Second Chart -->
-    <v-col :cols="4">
-      <v-card color="#1565C0" class="ma-4" :elevation="3" :height="120" rounded>
-        <v-chart :option="card2ChartOptions" />
-      </v-card>
-    </v-col>
-
-    <!-- Third Chart -->
-    <v-col :cols="4">
-      <v-card color="#6A1B9A" class="ma-4" :elevation="3" :height="120" rounded>
-        <v-chart :option="card1ChartOptions" />
-      </v-card>
-    </v-col>
-
-    <!-- Pie Chart -->
+    <!-- Pie Chart Column -->
     <v-col :cols="6">
-      <v-card title="Şikayet Kategorilerine Göre Toplamlar" class="ma-4" :elevation="3" :height="500" rounded>
-        <v-chart :option="pieChartOptions" />
+      <v-card title="Markalara Göre Şikayet Sınıflandırmaları" class="ma-4" rounded>
+        <v-chart :option="pieChartOptions" style="height: 575px;"/>
       </v-card>
+    </v-col>
+
+    <!-- Charts Column -->
+    <v-col :cols="6">
+
+      <!-- Second Chart -->
+      <v-row>
+        <v-col :cols="12">
+          <v-card title="Markalara Göre Şikayetler" color="#1565C0" class="ma-4" rounded>
+            <v-chart :option="card2ChartOptions" style="height: 234px;"/>
+          </v-card>
+        </v-col>
+
+        <!-- Third Chart -->
+        <v-col :cols="12">
+          <v-card title="Şikayet Kategorilerine Göre Toplamlar" color="#6A1B9A" class="ma-4" rounded>
+            <v-chart :option="card1ChartOptions" style="height: 234px;"/>
+          </v-card>
+        </v-col>
+      </v-row>
     </v-col>
 
   </v-row>
 </template>
 
+
 <script lang="ts">
 import axios from 'axios';
 import {use} from 'echarts/core';
-import { BarChart, LineChart, PieChart } from 'echarts/charts';
-import { CanvasRenderer } from 'echarts/renderers';
+import {BarChart, LineChart, PieChart} from 'echarts/charts';
+import {CanvasRenderer} from 'echarts/renderers';
 import VChart from 'vue-echarts';
-import { GridComponent, LegendComponent, TooltipComponent } from 'echarts/components';
+import {GridComponent, LegendComponent, TooltipComponent} from 'echarts/components';
 
 use([
   PieChart,
@@ -87,7 +93,7 @@ export default {
       },
       series: [
         {
-          data: [3367, 3565, 3323, 2987, 2856, 3060, 2845, 2542, 2156, 1925, 1802, 1456],
+          data: [],
           type: 'line',
           areaStyle: {},
         },
@@ -121,7 +127,7 @@ export default {
       },
       series: [
         {
-          data: [120, 200, 150, 80, 70, 110, 130],
+          data: [],
           type: 'bar',
           showBackground: true,
           backgroundStyle: {
@@ -147,12 +153,12 @@ export default {
             borderRadius: 8,
           },
           data: [
-            {value: 1242, name: 'Kredi Kartı'},
-            {value: 876, name: 'Müşteri İlişkileri'},
-            {value: 424, name: 'ATM'},
-            {value: 311, name: 'Bireysel Krediler'},
-            {value: 52, name: 'Banka/Şube'},
-            {value: 24, name: 'Kurumsal Krediler'},
+            {value: 0, name: 'Kredi Kartı'},
+            {value: 0, name: 'Müşteri İlişkileri'},
+            {value: 0, name: 'ATM'},
+            {value: 0, name: 'Bireysel Krediler'},
+            {value: 0, name: 'Banka/Şube'},
+            {value: 0, name: 'Kurumsal Krediler'},
           ],
         },
       ],
